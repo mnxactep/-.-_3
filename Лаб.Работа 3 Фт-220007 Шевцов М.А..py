@@ -35,6 +35,14 @@ def can_reach_in_two_moves(k, l, m, n, figure):
     else:
         return False
 
+# Функция для определения клетки, в которую фигура сможет попасть после двух ходов
+def get_next_move(k, l, m, n, figure):
+    for i in range(1, 9):
+        for j in range(1, 9):
+            if can_reach(k, l, i, j, figure) and can_reach(i, j, m, n, figure):
+                return i, j
+    return None
+
 # Ввод данных от пользователя
 k = int(input("Введите номер вертикали для первого поля: "))
 l = int(input("Введите номер горизонтали для первого поля: "))
@@ -67,6 +75,11 @@ else:
 if can_reach(k, l, m, n, figure):
     print("Фигура", figure, "может попасть на поле (", m, ",", n, ") одним ходом.")
 elif can_reach_in_two_moves(k, l, m, n, figure):
-    print("Фигура", figure, "может попасть на поле (", m, ",", n, ") за два хода.")
+    next_move = get_next_move(k, l, m, n, figure)
+    if next_move:
+        print("Фигура", figure, "может попасть на поле (", m, ",", n, ") за два хода.")
+        print("Следующий ход: (", next_move[0], ",", next_move[1], ")")
+    else:
+        print("Фигура", figure, "может попасть на поле (", m, ",", n, ") за два хода.")
 else:
     print("Фигура", figure, "не может попасть на поле (", m, ",", n, ") за два хода.")
